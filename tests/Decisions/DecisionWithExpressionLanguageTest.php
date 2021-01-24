@@ -7,6 +7,7 @@ namespace EonX\EasyDecision\Tests\Decisions;
 use EonX\EasyDecision\Decisions\ValueDecision;
 use EonX\EasyDecision\Exceptions\UnableToMakeDecisionException;
 use EonX\EasyDecision\Expressions\ExpressionFunction;
+use EonX\EasyDecision\Expressions\ExpressionLanguageConfig;
 use EonX\EasyDecision\Helpers\ValueExpressionFunctionProvider;
 use EonX\EasyDecision\Tests\AbstractTestCase;
 
@@ -51,18 +52,16 @@ final class DecisionWithExpressionLanguageTest extends AbstractTestCase
             $this->createLanguageRule('if(extra_param1 > 10).else(add(extra_param1))'),
         ];
 
-        $decision = (new ValueDecision())->addRules($rules);
-        $expressionLanguage = $this->createExpressionLanguage();
-
-        $expressionLanguage->addFunction(new ExpressionFunction(
-            'cap',
-            function ($arguments, $value, $max) {
+        $providers = [new ValueExpressionFunctionProvider()];
+        $functions = [
+            new ExpressionFunction('cap', function ($arguments, $value, $max) {
                 return \min($value, $max);
-            }
-        ));
-        $expressionLanguage->addFunctions((new ValueExpressionFunctionProvider())->getFunctions());
+            }),
+        ];
 
-        $decision->setExpressionLanguage($expressionLanguage);
+        $decision = (new ValueDecision())->addRules($rules);
+
+        $this->injectExpressionLanguage($decision, new ExpressionLanguageConfig(null, $providers, $functions));
 
         $tests = [
             [
