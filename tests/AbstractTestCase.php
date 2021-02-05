@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace EonX\EasyDecision\Tests;
 
+use EonX\EasyDecision\Expressions\ExpressionFunctionFactory;
+use EonX\EasyDecision\Expressions\ExpressionLanguageConfig;
 use EonX\EasyDecision\Expressions\ExpressionLanguageFactory;
+use EonX\EasyDecision\Expressions\Interfaces\ExpressionLanguageConfigInterface;
 use EonX\EasyDecision\Expressions\Interfaces\ExpressionLanguageFactoryInterface;
 use EonX\EasyDecision\Expressions\Interfaces\ExpressionLanguageInterface;
 use EonX\EasyDecision\Interfaces\DecisionInterface;
@@ -31,10 +34,11 @@ abstract class AbstractTestCase extends TestCase
      */
     private $languageRuleFactory;
 
-    protected function createExpressionLanguage(): ExpressionLanguageInterface
-    {
+    protected function createExpressionLanguage(
+        ?ExpressionLanguageConfigInterface $config = null
+    ): ExpressionLanguageInterface {
         return $this->getExpressionLanguageFactory()
-            ->create();
+            ->create($config ?? new ExpressionLanguageConfig());
     }
 
     protected function createFalseRule(string $name, ?int $priority = null): RuleInterface
@@ -71,12 +75,14 @@ abstract class AbstractTestCase extends TestCase
             return $this->expressionLanguageFactory;
         }
 
-        return $this->expressionLanguageFactory = new ExpressionLanguageFactory();
+        return $this->expressionLanguageFactory = new ExpressionLanguageFactory(new ExpressionFunctionFactory());
     }
 
-    protected function injectExpressionLanguage(DecisionInterface $decision): void
-    {
-        $decision->setExpressionLanguage($this->createExpressionLanguage());
+    protected function injectExpressionLanguage(
+        DecisionInterface $decision,
+        ?ExpressionLanguageConfigInterface $config = null
+    ): void {
+        $decision->setExpressionLanguage($this->createExpressionLanguage($config));
     }
 
     protected function tearDown(): void
