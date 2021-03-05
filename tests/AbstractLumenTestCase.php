@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace EonX\EasyDecision\Tests;
 
-use EonX\EasyDecision\Bridge\BridgeConstantsInterface;
+use EonX\EasyDecision\Bridge\Common\Interfaces\DecisionFactoryInterface;
 use EonX\EasyDecision\Bridge\Laravel\EasyDecisionServiceProvider;
-use EonX\EasyDecision\Interfaces\DecisionFactoryInterface;
-use EonX\EasyDecision\Tests\Stubs\RulesConfiguratorStub;
 use Laravel\Lumen\Application;
 
 abstract class AbstractLumenTestCase extends AbstractTestCase
@@ -25,10 +23,8 @@ abstract class AbstractLumenTestCase extends AbstractTestCase
 
         $app = new Application(__DIR__);
         $app->register(EasyDecisionServiceProvider::class);
-        $app->boot();
 
-        $app->singleton(RulesConfiguratorStub::class);
-        $app->tag(RulesConfiguratorStub::class, [BridgeConstantsInterface::TAG_DECISION_CONFIGURATOR]);
+        $app->boot();
 
         return $this->app = $app;
     }
