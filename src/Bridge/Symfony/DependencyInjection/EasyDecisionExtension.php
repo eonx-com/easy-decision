@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EonX\EasyDecision\Bridge\Symfony\DependencyInjection;
 
-use EonX\EasyDecision\Bridge\BridgeConstantsInterface;
+use EonX\EasyDecision\Bridge\Interfaces\TagsInterface;
 use EonX\EasyDecision\Interfaces\DecisionConfiguratorInterface;
 use EonX\EasyDecision\Interfaces\MappingProviderInterface;
 use EonX\EasyDecision\Interfaces\RuleInterface;
@@ -35,11 +35,11 @@ final class EasyDecisionExtension extends Extension
 
         $container
             ->registerForAutoconfiguration(DecisionConfiguratorInterface::class)
-            ->addTag(BridgeConstantsInterface::TAG_DECISION_CONFIGURATOR);
+            ->addTag(TagsInterface::DECISION_CONFIGURATOR);
 
         $container
             ->registerForAutoconfiguration(RuleInterface::class)
-            ->addTag(BridgeConstantsInterface::TAG_DECISION_RULE);
+            ->addTag(TagsInterface::DECISION_RULE);
 
         $container
             ->autowire(MappingProviderInterface::class, ConfigMappingProvider::class)
