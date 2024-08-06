@@ -7,7 +7,7 @@ use EonX\EasyDecision\Exception\NonBlockingRuleErrorExceptionInterface;
 use EonX\EasyDecision\Rule\RuleInterface;
 use Exception;
 
-final class RuleWithNonBlockingErrorExceptionStub implements RuleInterface
+final class WithNonBlockingErrorExceptionRuleStub implements RuleInterface
 {
     public function getPriority(): int
     {

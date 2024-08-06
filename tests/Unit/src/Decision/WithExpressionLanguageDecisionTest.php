@@ -9,7 +9,7 @@ use EonX\EasyDecision\ExpressionFunction\ExpressionFunction;
 use EonX\EasyDecision\Provider\ValueExpressionFunctionProvider;
 use EonX\EasyDecision\Tests\Unit\AbstractUnitTestCase;
 
-final class DecisionWithExpressionLanguageTest extends AbstractUnitTestCase
+final class WithExpressionLanguageDecisionTest extends AbstractUnitTestCase
 {
     public function testExceptionIfExpressionLanguageNotSet(): void
     {

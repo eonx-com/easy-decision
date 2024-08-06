@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace EonX\EasyDecision\Tests\Unit\Decision;
+namespace EonX\EasyDecision\Tests\Unit\Factory;
 
 use ArrayIterator;
 use EonX\EasyDecision\Configurator\SetExpressionLanguageDecisionConfigurator;

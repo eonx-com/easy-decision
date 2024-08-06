@@ -7,13 +7,13 @@ use EonX\EasyDecision\Decision\ConsensusDecision;
 use EonX\EasyDecision\Decision\DecisionInterface;
 use EonX\EasyDecision\Decision\ValueDecision;
 use EonX\EasyDecision\Provider\ValueExpressionFunctionProvider;
-use EonX\EasyDecision\Tests\Stub\Rule\RuleStopPropagationStub;
 use EonX\EasyDecision\Tests\Stub\Rule\RuleStub;
-use EonX\EasyDecision\Tests\Stub\Rule\RuleWithExtraOutputStub;
+use EonX\EasyDecision\Tests\Stub\Rule\StopPropagationRuleStub;
+use EonX\EasyDecision\Tests\Stub\Rule\WithExtraOutputRuleStub;
 use EonX\EasyDecision\Tests\Unit\AbstractUnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-final class DecisionsTest extends AbstractUnitTestCase
+final class DecisionTest extends AbstractUnitTestCase
 {
     /**
      * @see testDecisions
@@ -75,12 +75,12 @@ final class DecisionsTest extends AbstractUnitTestCase
         yield 'Consensus with name and extra' => [
             new ConsensusDecision(),
             [
-                new RuleWithExtraOutputStub('Unsupported with extra', false, [
+                new WithExtraOutputRuleStub('Unsupported with extra', false, [
                     'key' => 'value',
                 ], false),
                 new RuleStub('Only false', false),
                 new RuleStub('Only true', true),
-                new RuleWithExtraOutputStub('True with extra', true, [
+                new WithExtraOutputRuleStub('True with extra', true, [
                     'key' => 'value',
                 ]),
             ],
@@ -104,7 +104,7 @@ final class DecisionsTest extends AbstractUnitTestCase
             (new ValueDecision())->setExitOnPropagationStopped(),
             [
                 self::createLanguageRule('add(5)'),
-                new RuleStopPropagationStub('exit-on-propagation-stopped', 10, true),
+                new StopPropagationRuleStub('exit-on-propagation-stopped', 10, true),
                 self::createLanguageRule('add(10)'),
             ],
             [
